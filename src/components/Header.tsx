@@ -1,7 +1,18 @@
-import { Shield, Activity } from 'lucide-react';
+import { Shield, Activity, LogOut } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 export function Header() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
@@ -27,9 +38,26 @@ export function Header() {
           </div>
         </div>
 
-        <div className="hidden sm:flex items-center gap-3 px-4 py-2 glass-panel">
-          <Activity className="w-5 h-5 text-primary animate-pulse" />
-          <span className="text-sm font-medium text-foreground">LIVE</span>
+        <div className="flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-3 px-4 py-2 glass-panel">
+            <Activity className="w-5 h-5 text-primary animate-pulse" />
+            <span className="text-sm font-medium text-foreground">LIVE</span>
+          </div>
+          
+          {user && (
+            <div className="flex items-center gap-3 px-4 py-2 glass-panel text-sm">
+              <span className="text-foreground">{user.name}</span>
+              <span className="text-muted-foreground">({user.role})</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleLogout}
+                className="text-muted-foreground hover:text-primary"
+              >
+                <LogOut className="w-4 h-4" />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </motion.header>
