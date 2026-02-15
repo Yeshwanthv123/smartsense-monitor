@@ -9,7 +9,7 @@ import { Footer } from './Footer';
 export function Dashboard() {
   const { isConnected, currentData, history } = useWebSocket({
     url: 'ws://localhost:8000/ws',
-    simulateData: true, // Set to false when connecting to real backend
+    simulateData: false, // Connected to real backend
   });
 
   const isDanger = currentData?.status === 'DANGER';
@@ -42,7 +42,7 @@ export function Dashboard() {
               unit="PPM"
               icon={<Wind className="w-6 h-6" />}
               status={currentData?.status ?? 'SAFE'}
-              thresholds={{ warning: 300, danger: 500 }}
+              thresholds={{ warning: 300, danger: 1000 }}
             />
             <SensorCard
               title="Humidity"

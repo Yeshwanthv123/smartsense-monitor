@@ -118,11 +118,11 @@ def determine_status(temperature: float, gas_level: int) -> str:
     Determine safety status based on sensor thresholds.
     
     Thresholds:
-    - DANGER: Temperature > 45°C OR Gas > 500 PPM
+    - DANGER: Temperature > 45°C OR Gas > 1000 PPM
     - WARNING: Temperature > 35°C OR Gas > 300 PPM
     - SAFE: All readings within normal range
     """
-    if temperature > 45 or gas_level > 500:
+    if temperature > 45 or gas_level > 1000:
         return "DANGER"
     elif temperature > 35 or gas_level > 300:
         return "WARNING"
